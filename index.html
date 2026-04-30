@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Baby AI Doll – Gentle Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ─── FLOATING BACKGROUND STARS ─── -->
+<div class="bg-stars" id="bgStars"></div>
+
+<!-- ─── APP ROOT ─── -->
+<div id="app">
+
+  <!-- ════════════════════════════════════════════
+       SCREEN 1: WELCOME / SETUP
+  ════════════════════════════════════════════ -->
+  <div id="screen-welcome" class="screen active">
+    <div class="welcome-wrap">
+      <div class="doll-avatar big bounce" id="welcomeDoll">🧸</div>
+      <h1 class="logo-text">Baby AI Doll</h1>
+      <p class="tagline">A gentle, parent-guided companion<br>for your little one</p>
+
+      <div class="setup-card">
+        <h2>Let's meet your baby 💛</h2>
+        <label class="field-label">Baby's Name</label>
+        <input type="text" id="babyNameInput" class="cute-input" placeholder="e.g. Ayaan" maxlength="30" />
+        <label class="field-label">Nickname (optional)</label>
+        <input type="text" id="babyNickInput" class="cute-input" placeholder="e.g. Ayu" maxlength="20" />
+        <label class="field-label">Baby's Age</label>
+        <select id="babyAgeInput" class="cute-select">
+          <option value="0-3">0–3 months (Newborn)</option>
+          <option value="3-6">3–6 months</option>
+          <option value="6-12">6–12 months</option>
+          <option value="12-24">1–2 years</option>
+          <option value="24-36">2–3 years</option>
+        </select>
+        <label class="field-label">Preferred Language</label>
+        <select id="babyLangInput" class="cute-select">
+          <option value="en">English</option>
+          <option value="bn">Bengali</option>
+          <option value="ar">Arabic</option>
+          <option value="hi">Hindi</option>
+          <option value="ur">Urdu</option>
+          <option value="fr">French</option>
+        </select>
+        <button class="btn-primary big-btn" id="btnStart">
+          ✨ Meet Baby AI Doll
+        </button>
+        <p class="privacy-note">🔒 Your baby's name stays private on this device only.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       SCREEN 2: HOME DASHBOARD
+  ════════════════════════════════════════════ -->
+  <div id="screen-home" class="screen">
+    <div class="top-bar">
+      <div class="baby-chip" id="babyChip">
+        <span class="chip-icon">🌙</span>
+        <span id="chipName">Baby</span>
+      </div>
+      <button class="icon-btn" id="btnSettings" title="Settings">⚙️</button>
+    </div>
+
+    <div class="home-doll-wrap">
+      <div class="doll-glow"></div>
+      <div class="doll-avatar xl pulse" id="homeDoll">🧸</div>
+      <div class="speech-bubble" id="speechBubble">
+        <span id="speechText">Hello! I'm Baby AI Doll 💛</span>
+      </div>
+    </div>
+
+    <h2 class="greeting" id="homeGreeting">Hi there, little one!</h2>
+    <p class="sub-greeting">What would you like to do today?</p>
+
+    <div class="modes-grid">
+      <button class="mode-card calm" onclick="goMode('calm')">
+        <div class="mode-icon">🤍</div>
+        <div class="mode-name">Calm</div>
+        <div class="mode-desc">Soothe crying</div>
+      </button>
+      <button class="mode-card sleep" onclick="goMode('sleep')">
+        <div class="mode-icon">🌙</div>
+        <div class="mode-name">Sleep</div>
+        <div class="mode-desc">Bedtime routine</div>
+      </button>
+      <button class="mode-card learn" onclick="goMode('learn')">
+        <div class="mode-icon">🌟</div>
+        <div class="mode-name">Learning</div>
+        <div class="mode-desc">Simple words</div>
+      </button>
+      <button class="mode-card play" onclick="goMode('play')">
+        <div class="mode-icon">🎈</div>
+        <div class="mode-name">Play</div>
+        <div class="mode-desc">Fun activities</div>
+      </button>
+      <button class="mode-card story" onclick="goMode('story')">
+        <div class="mode-icon">📖</div>
+        <div class="mode-name">Story</div>
+        <div class="mode-desc">Gentle stories</div>
+      </button>
+      <button class="mode-card autotalk" onclick="goMode('autotalk')">
+        <div class="mode-icon">🔊</div>
+        <div class="mode-name">Auto Talk</div>
+        <div class="mode-desc">Repeating phrases</div>
+      </button>
+    </div>
+
+    <div class="safety-banner">
+      <span>💡</span>
+      <span>Check feeding, diaper, sleep &amp; comfort needs first.</span>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       SCREEN 3: CALM MODE
+  ════════════════════════════════════════════ -->
+  <div id="screen-calm" class="screen mode-screen calm-screen">
+    <div class="mode-header">
+      <button class="back-btn" onclick="goBack()">← Back</button>
+      <h2>🤍 Calm Mode</h2>
+    </div>
+    <div class="mode-doll-wrap">
+      <div class="doll-avatar lg sway">🧸</div>
+    </div>
+    <div class="phrase-display" id="calmPhraseDisplay">
+      <p id="calmPhrase">Tap a phrase below to speak it gently.</p>
+    </div>
+    <div class="calm-sounds">
+      <p class="section-title">Choose a Sound 🎵</p>
+      <div class="sound-row">
+        <button class="sound-btn" onclick="playSound('white')" title="White Noise">🌬️ White Noise</button>
+        <button class="sound-btn" onclick="playSound('heartbeat')" title="Heartbeat">💓 Heartbeat</button>
+        <button class="sound-btn" onclick="playSound('womb')" title="Womb Sound">🫀 Womb</button>
+        <button class="sound-btn" onclick="playSound('shush')" title="Shushing">🤫 Shush</button>
+        <button class="sound-btn active" onclick="stopSound()" title="Stop Sound">⏹ Stop</button>
+      </div>
+    </div>
+    <div class="phrase-list" id="calmPhraseList"></div>
+    <div class="speak-btn-row">
+      <button class="btn-primary" onclick="speakRandom('calm')">🎙 Speak Phrase</button>
+      <button class="btn-secondary" onclick="startAutoTalkMode('calm', 5)">🔄 Auto (5 min)</button>
+    </div>
+    <div class="safety-banner">
+      <span>🤱</span>
+      <span>Baby AI Doll gives gentle parent-guided voice support to help calm and comfort your baby.</span>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       SCREEN 4: SLEEP MODE
+  ════════════════════════════════════════════ -->
+  <div id="screen-sleep" class="screen mode-screen sleep-screen">
+    <div class="mode-header">
+      <button class="back-btn" onclick="goBack()">← Back</button>
+      <h2>🌙 Sleep Mode</h2>
+    </div>
+    <div class="sleep-stars-anim">
+      <span>⭐</span><span>✨</span><span>🌟</span><span>⭐</span><span>✨</span>
+    </div>
+    <div class="mode-doll-wrap">
+      <div class="doll-avatar lg sleep-bob">🧸</div>
+    </div>
+    <div class="phrase-display" id="sleepPhraseDisplay">
+      <p id="sleepPhrase">Let's get ready for a peaceful sleep...</p>
+    </div>
+    <div class="calm-sounds">
+      <p class="section-title">Sleep Sounds 🌙</p>
+      <div class="sound-row">
+        <button class="sound-btn" onclick="playSound('lullaby')">🎵 Lullaby</button>
+        <button class="sound-btn" onclick="playSound('rain')">🌧 Rain</button>
+        <button class="sound-btn" onclick="playSound('ocean')">🌊 Ocean</button>
+        <button class="sound-btn" onclick="playSound('crickets')">🌿 Crickets</button>
+        <button class="sound-btn active" onclick="stopSound()">⏹ Stop</button>
+      </div>
+    </div>
+    <div class="phrase-list" id="sleepPhraseList"></div>
+    <div class="speak-btn-row">
+      <button class="btn-primary" onclick="speakRandom('sleep')">🎙 Speak Phrase</button>
+      <button class="btn-secondary night-btn" onclick="toggleNightMode()">🌑 Night Mode</button>
+    </div>
+    <div class="sleep-timer-row">
+      <p class="section-title">Fade-out Timer</p>
+      <div class="timer-chips">
+        <button class="timer-chip" onclick="setTimer(10)">10 min</button>
+        <button class="timer-chip" onclick="setTimer(20)">20 min</button>
+        <button class="timer-chip" onclick="setTimer(30)">30 min</button>
+        <button class="timer-chip" onclick="setTimer(60)">60 min</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       SCREEN 5: LEARNING MODE
+  ════════════════════════════════════════════ -->
+  <div id="screen-learn" class="screen mode-screen learn-screen">
+    <div class="mode-header">
+      <button class="back-btn" onclick="goBack()">← Back</button>
+      <h2>🌟 Learning Mode</h2>
+    </div>
+    <div class="learn-content">
+      <div class="learn-category-row" id="learnCategoryRow"></div>
+      <div class="learn-card-wrap">
+        <div class="learn-card" id="learnCard">
+          <div class="learn-emoji" id="learnEmoji">👋</div>
+          <div class="learn-word" id="learnWord">Hello</div>
+        </div>
+      </div>
+      <div class="phrase-display">
+        <p id="learnPhrase">Tap a category to start learning!</p>
+      </div>
+      <div class="speak-btn-row">
+        <button class="btn-secondary" onclick="prevLearn()">← Prev</button>
+        <button class="btn-primary" onclick="speakLearn()">🎙 Speak</button>
+        <button class="btn-secondary" onclick="nextLearn()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       SCREEN 6: PLAY MODE
+  ════════════════════════════════════════════ -->
+  <div id="screen-play" class="screen mode-screen play-screen">
+    <div class="mode-header">
+      <button class="back-btn" onclick="goBack()">← Back</button>
+      <h2>🎈 Play Mode</h2>
+    </div>
+    <div class="play-game-select" id="playGameSelect">
+      <p class="section-title">Choose a Game 🎮</p>
+      <div class="game-grid" id="gameGrid"></div>
+    </div>
+    <div class="play-game-active" id="playGameActive" style="display:none">
+      <button class="back-btn" onclick="exitGame()">← Games</button>
+      <div class="game-display" id="gameDisplay"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       SCREEN 7: STORY MODE
+  ════════════════════════════════════════════ -->
+  <div id="screen-story" class="screen mode-screen story-screen">
+    <div class="mode-header">
+      <button class="back-btn" onclick="goBack()">← Back</button>
+      <h2>📖 Story Mode</h2>
+    </div>
+    <div class="story-list" id="storyList"></div>
+    <div class="story-reader" id="storyReader" style="display:none">
+      <button class="back-btn" onclick="exitStory()">← Stories</button>
+      <div class="story-header-display" id="storyHeaderDisplay"></div>
+      <div class="story-pages" id="storyPages"></div>
+      <div class="story-controls">
+        <button class="btn-secondary" onclick="prevPage()">← Prev</button>
+        <span id="storyPageIndicator" class="page-indicator">1 / 1</span>
+        <button class="btn-primary" onclick="nextPage()">Next →</button>
+        <button class="btn-voice" onclick="readPageAloud()">🎙 Read Aloud</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       SCREEN 8: AUTO TALK
+  ════════════════════════════════════════════ -->
+  <div id="screen-autotalk" class="screen mode-screen autotalk-screen">
+    <div class="mode-header">
+      <button class="back-btn" onclick="goBack()">← Back</button>
+      <h2>🔊 Gentle Auto Talk</h2>
+    </div>
+    <div class="autotalk-doll">
+      <div class="doll-avatar xl" id="autotalkDoll">🧸</div>
+    </div>
+    <p class="autotalk-desc">
+      Gentle Auto Talk repeats calming phrases during a parent-controlled session.<br>
+      <strong>Always stay with your baby.</strong>
+    </p>
+    <div class="autotalk-mode-select">
+      <p class="section-title">Select Mode</p>
+      <div class="at-mode-row">
+        <button class="at-mode-btn active" data-mode="calm" onclick="selectATMode('calm', this)">🤍 Calm</button>
+        <button class="at-mode-btn" data-mode="sleep" onclick="selectATMode('sleep', this)">🌙 Sleep</button>
+        <button class="at-mode-btn" data-mode="learn" onclick="selectATMode('learn', this)">🌟 Learn</button>
+      </div>
+    </div>
+    <div class="autotalk-timer-select">
+      <p class="section-title">Session Duration</p>
+      <div class="timer-chips">
+        <button class="timer-chip active" onclick="selectATDuration(2, this)">2 min</button>
+        <button class="timer-chip" onclick="selectATDuration(5, this)">5 min</button>
+        <button class="timer-chip" onclick="selectATDuration(10, this)">10 min</button>
+        <button class="timer-chip" onclick="selectATDuration(15, this)">15 min</button>
+      </div>
+    </div>
+    <div class="volume-row">
+      <label class="field-label">🔊 Volume</label>
+      <input type="range" id="atVolume" min="0" max="100" value="70" class="volume-slider">
+      <span id="atVolumeVal">70%</span>
+    </div>
+    <div class="autotalk-phrase-box" id="atPhraseBox">
+      <p id="atCurrentPhrase">–</p>
+    </div>
+    <div class="autotalk-progress" id="atProgress">
+      <div class="at-timer-display" id="atTimerDisplay">00:00</div>
+      <div class="at-progress-bar"><div id="atProgressFill"></div></div>
+    </div>
+    <div class="autotalk-controls">
+      <button class="btn-big-stop" id="btnATStop" onclick="stopAutoTalk()" style="display:none">⏹ STOP</button>
+      <button class="btn-big-pause" id="btnATpause" onclick="pauseAutoTalk()" style="display:none">⏸ Pause</button>
+      <button class="btn-primary big-btn" id="btnATStart" onclick="startAutoTalk()">▶ Start Session</button>
+    </div>
+    <div class="safety-banner">
+      <span>🔒</span>
+      <span>Parent control active. Session ends automatically. Always supervise your baby.</span>
+    </div>
+    <div class="volume-warning" id="volumeWarning">⚠️ Safe Volume: Keep sounds gentle for baby's ears.</div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       SCREEN 9: SETTINGS
+  ════════════════════════════════════════════ -->
+  <div id="screen-settings" class="screen settings-screen">
+    <div class="mode-header">
+      <button class="back-btn" onclick="goBack()">← Back</button>
+      <h2>⚙️ Parent Settings</h2>
+    </div>
+
+    <div class="settings-sections">
+
+      <!-- Baby Profile -->
+      <div class="settings-card">
+        <h3>👶 Baby Profile</h3>
+        <label class="field-label">Baby's Name</label>
+        <input type="text" id="settingName" class="cute-input" maxlength="30">
+        <label class="field-label">Nickname</label>
+        <input type="text" id="settingNick" class="cute-input" maxlength="20">
+        <label class="field-label">Age Group</label>
+        <select id="settingAge" class="cute-select">
+          <option value="0-3">0–3 months</option>
+          <option value="3-6">3–6 months</option>
+          <option value="6-12">6–12 months</option>
+          <option value="12-24">1–2 years</option>
+          <option value="24-36">2–3 years</option>
+        </select>
+        <label class="field-label">Language</label>
+        <select id="settingLang" class="cute-select">
+          <option value="en">English</option>
+          <option value="bn">Bengali</option>
+          <option value="ar">Arabic</option>
+          <option value="hi">Hindi</option>
+          <option value="ur">Urdu</option>
+          <option value="fr">French</option>
+        </select>
+      </div>
+
+      <!-- Voice Style -->
+      <div class="settings-card">
+        <h3>🎙 Voice Style</h3>
+        <div class="voice-options" id="voiceOptions">
+          <label class="voice-option active" data-voice="parent">
+            <input type="radio" name="voiceStyle" value="parent" checked>
+            <span class="vo-icon">🤗</span>
+            <span class="vo-name">Soft Parent-Like</span>
+          </label>
+          <label class="voice-option" data-voice="story">
+            <input type="radio" name="voiceStyle" value="story">
+            <span class="vo-icon">📚</span>
+            <span class="vo-name">Gentle Story</span>
+          </label>
+          <label class="voice-option" data-voice="lullaby">
+            <input type="radio" name="voiceStyle" value="lullaby">
+            <span class="vo-icon">🌙</span>
+            <span class="vo-name">Sleepy Lullaby</span>
+          </label>
+          <label class="voice-option" data-voice="playful">
+            <input type="radio" name="voiceStyle" value="playful">
+            <span class="vo-icon">🎈</span>
+            <span class="vo-name">Playful Learning</span>
+          </label>
+          <label class="voice-option" data-voice="recorded">
+            <input type="radio" name="voiceStyle" value="recorded">
+            <span class="vo-icon">🎤</span>
+            <span class="vo-name">Parent Recorded</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Parent Voice Recording -->
+      <div class="settings-card">
+        <h3>🎤 Parent Voice Recording</h3>
+        <p class="settings-note">Record short personal phrases for Baby AI Doll to play during Calm and Sleep Mode.</p>
+        <div class="parent-gate-notice">
+          <span>🔒 Parent Gate: Please confirm you are the parent/guardian before recording.</span>
+          <button class="btn-small" id="btnOpenRecording" onclick="openRecordingGate()">Unlock Recording</button>
+        </div>
+        <div id="recordingSection" style="display:none">
+          <div class="recording-phrases" id="recordingPhrases"></div>
+        </div>
+      </div>
+
+      <!-- Phrase Preferences -->
+      <div class="settings-card">
+        <h3>💬 Phrase Preferences</h3>
+        <label class="toggle-row">
+          <span>Include calming phrases</span>
+          <input type="checkbox" id="prefCalm" checked>
+          <span class="toggle-switch"></span>
+        </label>
+        <label class="toggle-row">
+          <span>Include sleep phrases</span>
+          <input type="checkbox" id="prefSleep" checked>
+        </label>
+        <label class="toggle-row">
+          <span>Include learning phrases</span>
+          <input type="checkbox" id="prefLearn" checked>
+        </label>
+        <label class="toggle-row">
+          <span>Include praise phrases</span>
+          <input type="checkbox" id="prefPraise" checked>
+        </label>
+      </div>
+
+      <!-- Privacy -->
+      <div class="settings-card">
+        <h3>🔒 Privacy & Data</h3>
+        <p class="settings-note">All data is stored locally on this device only. Nothing is shared or uploaded.</p>
+        <button class="btn-secondary danger-btn" onclick="confirmDeleteData()">🗑 Delete All Baby Data</button>
+        <p class="privacy-note">This will remove the baby name, nickname, and all recordings.</p>
+      </div>
+
+      <button class="btn-primary big-btn" onclick="saveSettings()">💾 Save Settings</button>
+    </div>
+  </div>
+
+</div><!-- /#app -->
+
+<!-- ─── TOAST NOTIFICATION ─── -->
+<div id="toast" class="toast"></div>
+
+<!-- ─── NIGHT MODE OVERLAY ─── -->
+<div id="nightOverlay" class="night-overlay" onclick="toggleNightMode()">
+  <div class="night-content">
+    <div class="doll-avatar xl">🧸</div>
+    <p id="nightPhrase">Good night, little one...</p>
+    <button class="btn-secondary" onclick="toggleNightMode()">💡 Turn on Light</button>
+  </div>
+</div>
+
+<!-- ─── TIMER TOAST ─── -->
+<div id="timerToast" class="timer-toast" style="display:none">
+  <span>⏱ Timer: </span><span id="timerCountdown">--:--</span>
+  <button onclick="clearTimer()">✕</button>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
